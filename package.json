@@ -1,0 +1,20 @@
+{
+  "name": "team_profile_generator",
+  "version": "1.0.0",
+  "description": "Application to generate team records",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "irene adam manik",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^27.2.5"
+  },
+  "dependencies": {
+    "inquirer": "^8.2.0"
+  }
+}

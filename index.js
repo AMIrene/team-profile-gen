@@ -168,13 +168,13 @@ const addAnotherEmployee = () => {
 
 const writeFile = data => {
     fs.writeFile('./dist/index.html', data, err => {
-        // if there is an error 
+        // if error
         if (err) {
             console.log(err);
             return;
-        // when the profile has been created 
+        // if success 
         } else {
-            console.log("Your team profile has been successfully created! Please check out the index.html")
+            console.log("Success!")
         }
     })
 }; 

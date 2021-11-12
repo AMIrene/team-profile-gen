@@ -91,10 +91,10 @@ const addAnEmployee = () => {
 };
 
 const writeFile = answers => {
-    fs.writeFile('./dist/index.html', answers, err => {
+    fs.writeFile('./dist/output.html', answers, error => {
         // if eror
-        if (err) {
-            console.log(err);
+        if (error) {
+            console.log(error);
             return;
         // if success 
         } else {

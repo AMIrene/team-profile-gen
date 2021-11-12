@@ -16,159 +16,83 @@ const Manager = require('./lib/Manager');
 
 const staffGroup = [];
 
-
-const addEmployee = () => {
+const addAnEmployee = () => {
     return inquirer.prompt([
         {
             type: 'list',
             message: 'What is your role?',
             name: 'role',
             choices: ['Manager', 'Engineer', 'Intern']
-            
-
         },
 
         {
             type: 'input',
-            message: 'What is your name?',
+            message: 'Enter name',
             name: 'name',
-
         },
         {
             type: 'input',
-            message: 'What is your employee ID?',
+            message: 'Enter employee ID',
             name: 'id',
-
         },
         {
             type: 'input',
-            message: 'What is your email?',
+            message: 'Enter employee email',
             name: 'email',
-
         },
         {
             type: 'input',
-            message: 'What is your contact number?',
+            message: 'Enter contact number',
             name: 'officeNumber',
-            when: (answer) => answer.role === "Manager",
-
+            when: (input) => input.role === 'Manager',
         },
         {
             type: 'input',
-            message: 'What is your Github username?',
+            message: 'Enter Github username',
             name: 'github',
-            when: (answer) => answer.role === "Engineer",
-
+            when: (input) => input.role === 'Engineer',
         },
         {
             type: 'input',
-            message: 'What is your school name?',
+            message: 'Enter school name',
             name: 'school',
-            when: (answer) => answer.role === "Intern",
-
+            when: (input) => input.role === 'Intern',
         },
-        
+        {
+            type: 'confirm',
+            name: 'addAnotherEmployee',
+            message: 'Keep adding employees?',
+            default: false
+        }
     ])
-        .then(userInput => {
-            let { name, id, role, email, officeNumber, github, school } = userInput;
-            let user;
+        .then(teamDetails => {
+            let { name, id, email, role, officeNumber, github, school, addAnotherEmployee } = teamDetails;
+            let staffMember;
 
             if (role === 'Manager') {
-                 
-                user = new Manager(name, id, email, officeNumber);
-                console.log(user);
+                staffMember = new Manager(name, id, email, officeNumber);
             }
             else if (role === 'Engineer') {
-                user = new Engineer(name, id, email, github);
+                staffMember = new Engineer(name, id, email, github);
             }
 
             else if (role === 'Intern') {
-                user = new Intern(name, id, email, school);
+                staffMember = new Intern(name, id, email, school);
             }
-        
-            staffGroup.push(user);
+            staffGroup.push(staffMember);
+            if (addAnotherEmployee) {
+                return addAnEmployee(staffGroup);
+                
+            }
+            else {
+                return staffGroup;
+            }
         })
 };
 
-const addAnotherEmployee = () => {
-    return inquirer.prompt([
-        {
-            type: 'list',
-            message: 'What is your role?',
-            name: 'role',
-            choices: ['Manager', 'Engineer', 'Intern']
-            
-
-        },
-
-        {
-            type: 'input',
-            message: 'What is your name?',
-            name: 'name',
-
-        },
-        {
-            type: 'input',
-            message: 'What is your employee ID?',
-            name: 'id',
-
-        },
-        {
-            type: 'input',
-            message: 'What is your email?',
-            name: 'email',
-
-        },
-        {
-            type: 'input',
-            message: 'What is your contact number?',
-            name: 'officeNumber',
-            when: (answer) => answer.role === "Manager",
-
-        },
-        {
-            type: 'input',
-            message: 'What is your Github username?',
-            name: 'github',
-            when: (answer) => answer.role === "Engineer",
-
-        },
-        {
-            type: 'input',
-            message: 'What is your school name?',
-            name: 'school',
-            when: (answer) => answer.role === "Intern",
-
-        },
-        
-        
-    ])
-    .then(newUserInput => {
-        let { name, id, role, email, officeNumber, github, school } = newUserInput;
-        let user;
-
-        if (role === 'Manager') {
-             
-            user = new Manager(name, id, email, officeNumber);
-            console.log(user);
-        }
-        else if (role === 'Engineer') {
-            user = new Engineer(name, id, email, github);
-        }
-
-        else if (role === 'Intern') {
-            user = new Intern(name, id, email, school);
-        }
-    
-        staffGroup.push(newUserInput);
-    })
-};
-    
-
-
-const writeFile = data => {
-    fs.writeFile('./dist/index.html', data, err => {
-        // if error
+const writeFile = answers => {
+    fs.writeFile('./dist/index.html', answers, err => {
+        // if eror
         if (err) {
             console.log(err);
             return;
@@ -179,8 +103,8 @@ const writeFile = data => {
     })
 }; 
 
-addEmployee()
-  .then (addAnotherEmployee)
+addAnEmployee()
+
   .then(staffGroup => {
     return renderHTML(staffGroup);
   })

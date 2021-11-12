@@ -73,36 +73,24 @@ const renderInternCard = function (intern) {
 //function to add cards to list of employee /team group
 renderHTMLpage = (answers) => {
 
-    //Team member cards set as an array
-
-    teamMemberCards = [];
-
-    for (let i = 0; i < answers.length; i++) {
-        const teamMember = answers[i];
-        const teamRole = teamMember.getRole();
-
-//render Manager card if input is Manager
-        if (teamRole === 'Manager') {
-            const managerInfo = renderManagerCard(teamMember);
-            teamMemberCards.push(managerInfo);
-        }
-//render Engineer card if input is Engineer
-        if (teamRole === 'Engineer') {
-            const engineerInfo = renderEngineerCard(teamMember);
-            teamMemberCards.push(engineerInfo);
-        }
-//render Intern card if input is Intern
-        
-        if (teamRole === 'Intern') {
-            const internInfo = renderInternCard(teamMember);
-            teamMemberCards.push(internInfo);
-        }
-        
+  const teamMemberCards = answers.map((teamMember) => {
+    const teamRole = teamMember.getRole();
+    if (teamRole === 'Manager') {
+      const managerInfo = renderManagerCard(teamMember);
+      return managerInfo;
     }
 
-//The join() method creates and returns a new string 
-//by concatenating all of the elements in an array (or an array-like object),
-// separated specified separator string.
+    if (teamRole === 'Engineer') {
+      const engineerInfo = renderEngineerCard(teamMember);
+      return engineerInfo;
+    }
+
+    if (teamRole === 'Intern') {
+      const internInfo = renderInternCard(teamMember);
+      return internInfo
+    }
+  });
+   
     const staffInfo = teamMemberCards.join('')
     const employeeGroup = createEmployeeGroup(staffInfo);
     return employeeGroup;

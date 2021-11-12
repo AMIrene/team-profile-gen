@@ -44,19 +44,19 @@ const addAnEmployee = () => {
             type: 'input',
             message: 'Enter contact number',
             name: 'officeNumber',
-            when: (input) => input.role === 'Manager',
+            when: (userResponse) => userResponse.role === 'Manager',
         },
         {
             type: 'input',
             message: 'Enter Github username',
             name: 'github',
-            when: (input) => input.role === 'Engineer',
+            when: (userResponse) => userResponse.role === 'Engineer',
         },
         {
             type: 'input',
             message: 'Enter school name',
             name: 'school',
-            when: (input) => input.role === 'Intern',
+            when: (userResponse) => userResponse.role === 'Intern',
         },
         {
             type: 'confirm',

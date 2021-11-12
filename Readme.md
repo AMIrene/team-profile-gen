@@ -62,7 +62,7 @@ npm run rest
 
 ### Walkthrough Video: 
 
-
+[Check out the video](https://youtu.be/-R7XDE371nQ)
 
 ## Licenses
 

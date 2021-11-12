@@ -108,8 +108,8 @@ addAnEmployee()
   .then(staffGroup => {
     return renderHTML(staffGroup);
   })
-  .then(pageHTML => {
-    return writeFile(pageHTML);
+  .then(htmlPageContent => {
+    return writeFile(htmlPageContent);
   })
   .catch(err => {
  console.log(err);
